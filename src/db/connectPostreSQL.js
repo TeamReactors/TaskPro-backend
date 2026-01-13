@@ -18,6 +18,14 @@ export const connectPostreSQL = async () => {
                 password VARCHAR(255) NOT NULL
             );
         `;
+    await sql`
+      CREATE TABLE IF NOT EXISTS board(
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(100) NOT NULL,
+        user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+      );
+    `;
     console.log("Bağlantı başarılı");
   } catch (error) {
     console.log("Başarısız");
