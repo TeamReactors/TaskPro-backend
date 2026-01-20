@@ -4,6 +4,36 @@ import createHttpError from "http-errors";
 import { sql } from "../db/connectPostreSQL.js";
 import { env } from "../utils/env.js";
 
+const createSession = async (user) => {
+  const accessToken = jwt.sign(
+    { id: user.id, email: user.email },
+    env("JWT_SECRET"),
+    { expiresIn: env("JWT_ACCESS_EXPIRES_IN", "15m") } 
+  );
+
+  const refreshToken = jwt.sign(
+    { id: user.id, email: user.email },
+    env("JWT_SECRET"),
+    { expiresIn: env("JWT_REFRESH_EXPIRES_IN", "7d") }
+  );
+
+  const session = await sql`
+    INSERT INTO sessions (user_id, refresh_token, refresh_token_valid_until)
+    VALUES (
+      ${user.id}, 
+      ${refreshToken}, 
+      NOW() + INTERVAL '7 days'
+    )
+    RETURNING id, refresh_token, refresh_token_valid_until
+  `;
+
+  return {
+    accessToken,
+    refreshToken,
+    sessionId: session[0].id,
+  };
+};
+
 export const registerUser = async (payload) => {
   const existingUser = await sql`SELECT email FROM users WHERE email = ${payload.email}`;
   
@@ -13,13 +43,20 @@ export const registerUser = async (payload) => {
 
   const encryptedPassword = await bcrypt.hash(payload.password, 10);
 
-  const newUser = await sql`
+  const newUserResult = await sql`
     INSERT INTO users (name, email, password) 
     VALUES (${payload.name}, ${payload.email}, ${encryptedPassword}) 
     RETURNING id, name, email
   `;
 
-  return newUser[0];
+  const user = newUserResult[0];
+  
+  const sessionData = await createSession(user);
+
+  return {
+    user,
+    ...sessionData,
+  };
 };
 
 export const loginUser = async (payload) => {
@@ -30,20 +67,13 @@ export const loginUser = async (payload) => {
     throw createHttpError(401, "Email or password invalid");
   }
 
-  const passwordCompare = await bcrypt.compare(payload.password, user.password);
+  const kh = await bcrypt.compare(payload.password, user.password);
 
-  if (!passwordCompare) {
+  if (!kh) {
     throw createHttpError(401, "Email or password invalid");
   }
 
-  const token = jwt.sign(
-    {
-      id: user.id,
-      email: user.email,
-    },
-    env("JWT_SECRET"),
-    { expiresIn: env("JWT_EXPIRES_IN", "24h") }
-  );
+  const sessionData = await createSession(user);
 
   return {
     user: {
@@ -51,6 +81,46 @@ export const loginUser = async (payload) => {
       name: user.name,
       email: user.email,
     },
-    token,
+    ...sessionData,
   };
+};
+
+export const logoutUser = async (refreshToken) => {
+  await sql`DELETE FROM sessions WHERE refresh_token = ${refreshToken}`;
+};
+
+export const refreshUserSession = async (currentRefreshToken) => {
+  try {
+    const decoded = jwt.verify(currentRefreshToken, env("JWT_SECRET"));
+
+    const sessionResult = await sql`
+      SELECT * FROM sessions 
+      WHERE refresh_token = ${currentRefreshToken} 
+      AND refresh_token_valid_until > NOW()
+    `;
+
+    if (sessionResult.length === 0) {
+      throw createHttpError(401, "Session expired or invalid");
+    }
+
+    await sql`DELETE FROM sessions WHERE refresh_token = ${currentRefreshToken}`;
+
+    const user = { id: decoded.id, email: decoded.email };
+    const newSession = await createSession(user);
+
+    return newSession;
+
+  // eslint-disable-next-line no-unused-vars
+  } catch (err) {
+    throw createHttpError(401, "Invalid refresh token");
+  }
+};
+
+// diğer oturumları kapatma methodu
+export const logoutAllOtherSessions = async (userId, currentSessionId) => {
+  await sql`
+    DELETE FROM sessions 
+    WHERE user_id = ${userId} 
+    AND id != ${currentSessionId}
+  `;
 };
