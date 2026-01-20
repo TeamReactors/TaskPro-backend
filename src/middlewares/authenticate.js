@@ -33,8 +33,15 @@ export const authenticate = async (req, res, next) => {
 
     req.user = user;
     next();
-  // eslint-disable-next-line no-unused-vars
   } catch (err) {
-    next(createHttpError(401, "Not authorized"));
+    if (err.name === "TokenExpiredError") {
+      return next(createHttpError(401, "Access token has expired"));
+    } 
+    
+    if (err.name === "JsonWebTokenError") {
+      return next(createHttpError(401, "Invalid access token"));
+    }
+
+    return next(createHttpError(401, "Authentication failed"));
   }
 };

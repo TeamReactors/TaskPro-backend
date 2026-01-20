@@ -38,7 +38,7 @@ export const registerUser = async (payload) => {
   const existingUser = await sql`SELECT email FROM users WHERE email = ${payload.email}`;
   
   if (existingUser.length > 0) {
-    throw createHttpError(409, "Email in use");
+    throw createHttpError(409, "User with this email already exists");
   }
 
   const encryptedPassword = await bcrypt.hash(payload.password, 10);
@@ -64,13 +64,13 @@ export const loginUser = async (payload) => {
   const user = userResult[0];
 
   if (!user) {
-    throw createHttpError(401, "Email or password invalid");
+    throw createHttpError(404, "User with this email does not exist");
   }
 
-  const kh = await bcrypt.compare(payload.password, user.password);
+  const passwordCompare = await bcrypt.compare(payload.password, user.password);
 
-  if (!kh) {
-    throw createHttpError(401, "Email or password invalid");
+  if (!passwordCompare) {
+    throw createHttpError(401, "Incorrect password");
   }
 
   const sessionData = await createSession(user);
