@@ -1,10 +1,17 @@
+// Modules
 import express from "express";
 import cors from "cors";
 import pino from "pino-http";
 
+// Utils
 import { env } from "./utils/env.js";
+
+// Middlewares
 import { notRouteFound } from "./middlewares/notRouteFound.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
+import { swaggerDocs } from "./middlewares/swaggerDocs.js";
+
+// Routers
 import indexRoute from "./routers/index.js";
 
 const startServer = () => {
@@ -17,19 +24,19 @@ const startServer = () => {
         "http://localhost:5173",
       ],
       credentials: true,
-    })
+    }),
   );
   app.use(
     pino({
       transport: {
         target: "pino-pretty",
       },
-    })
+    }),
   );
   app.use(express.json());
 
   app.use(indexRoute);
-
+  app.use("/api-docs", swaggerDocs());
   app.use(notRouteFound);
   app.use(errorHandler);
 
