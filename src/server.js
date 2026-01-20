@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import pino from "pino-http";
+import cookieParser from "cookie-parser";
 
 import { env } from "./utils/env.js";
 import { notRouteFound } from "./middlewares/notRouteFound.js";
@@ -15,10 +16,14 @@ const startServer = () => {
       origin: [
         "https://task-pro-frontend-eight.vercel.app",
         "http://localhost:5173",
+        "http://localhost:3000"
       ],
       credentials: true,
     })
   );
+
+  app.use(cookieParser());
+
   app.use(
     pino({
       transport: {

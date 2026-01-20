@@ -4,10 +4,18 @@ import { env } from "../utils/env.js";
 import { sql } from "../db/connectPostreSQL.js";
 
 export const authenticate = async (req, res, next) => {
+  let token;
   const { authorization = "" } = req.headers;
-  const [bearer, token] = authorization.split(" ");
+  const [bearer, headerToken] = authorization.split(" ");
 
-  if (bearer !== "Bearer" || !token) {
+  if (bearer === "Bearer" && headerToken) {
+    token = headerToken;
+  } 
+  else if (req.cookies && req.cookies.accessToken) {
+    token = req.cookies.accessToken;
+  }
+
+  if (!token) {
     next(createHttpError(401, "Not authorized"));
     return;
   }
