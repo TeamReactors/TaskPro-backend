@@ -1,0 +1,5 @@
+description: "The user successfully logged in."
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/auth/loggedInUser.yaml
