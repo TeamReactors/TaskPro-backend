@@ -1,5 +1,5 @@
 type: object
-title: "Logged-in User"
+title: "Auth | Logged-in User"
 properties:
   message:
     type: string
