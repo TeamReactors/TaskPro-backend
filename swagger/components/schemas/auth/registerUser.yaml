@@ -1,0 +1,31 @@
+type: object
+title: "Auth | Register User"
+properties:
+  name:
+    type: string
+    description: Full name of the user.
+    example: "John Doe"
+    minLength: 2
+    maxLength: 100
+  email:
+    type: string
+    format: email
+    description: Email Address of the user.
+    example: "test@example.com"
+  password:
+    type: string
+    format: password
+    description: Password for the user account.
+    example: "********"
+    minLength: 6
+  confirmPassword:
+    type: string
+    format: password
+    description: Confirmation of the password.
+    example: "********"
+    minLength: 6
+required:
+  - name
+  - email
+  - password
+  - confirmPassword
