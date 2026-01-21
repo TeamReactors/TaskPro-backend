@@ -4,6 +4,14 @@ import authRoute from "./auth.js";
 
 const router = Router();
 
+router.get("/", (req, res) => {
+  res.json({
+    status: "success",
+    message: "Task Pro Backend API is running!",
+    timestamp: new Date().toISOString(),
+  });
+});
+
 router.use("/auth", authRoute);
 router.use("/board", boardRoute);
 
