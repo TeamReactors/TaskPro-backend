@@ -1,5 +1,5 @@
 type: object
-title: "Login User"
+title: "Auth | Login User"
 properties:
   email:
     type: string
