@@ -11,7 +11,12 @@
   },
   "servers": [
     {
-      "url": "https://taskpro-backend-yofv.onrender.com"
+      "url": "http://localhost:3000",
+      "description": "Local Server"
+    },
+    {
+      "url": "https://taskpro-backend-yofv.onrender.com",
+      "description": "Production Server"
     }
   ],
   "tags": [
@@ -23,15 +28,15 @@
   "paths": {
     "/auth/login": {
       "post": {
-        "security": [
-          {}
-        ],
         "tags": [
           "Auth"
         ],
         "summary": "User Login",
         "operationId": "loginUser",
         "description": "Endpoint for user login",
+        "security": [
+          {}
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -44,6 +49,141 @@
         "responses": {
           "200": {
             "$ref": "#/components/responses/200"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User Registration",
+        "operationId": "registerUser",
+        "description": "Endpoint for user registration",
+        "security": [
+          {}
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/registerUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User Logout",
+        "operationId": "logoutUser",
+        "description": "Endpoint for user logout",
+        "security": [
+          {}
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User Refresh Token",
+        "operationId": "refreshUserToken",
+        "description": "Endpoint for refreshing user token",
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "description": "The user's token has been successfully renewed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/refreshUser"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/auth/logout-others": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User Logout Others",
+        "operationId": "logoutOtherSessions",
+        "description": "Endpoint for logging out from other sessions",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user has been successfully logged out from other sessions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/logoutOthers"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error occurred while the user was logging out of other sessions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/logoutOthers"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "An error occurred while the user was logging out of other sessions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/logoutOthers"
+                }
+              }
+            }
           }
         }
       }
@@ -60,7 +200,7 @@
     "schemas": {
       "loginUser": {
         "type": "object",
-        "title": "Login User",
+        "title": "Auth | Login User",
         "properties": {
           "email": {
             "type": "string",
@@ -82,7 +222,7 @@
       },
       "loggedInUser": {
         "type": "object",
-        "title": "Logged-in User",
+        "title": "Auth | Logged-in User",
         "properties": {
           "message": {
             "type": "string",
@@ -116,6 +256,144 @@
             }
           }
         }
+      },
+      "BadRequestError": {
+        "type": "object",
+        "title": "Auth Error | Bad Request ",
+        "x-tags": [
+          "Auth"
+        ],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "BadRequestError"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Bad Request"
+              },
+              "errors": {
+                "type": "array",
+                "example": [
+                  {
+                    "message": "Please provide a valid email address",
+                    "path": [
+                      "email"
+                    ],
+                    "type": "string.email",
+                    "context": {
+                      "value": "test@example.comryruytyjtjth",
+                      "invalids": [
+                        "test@example.comryruytyjtjth"
+                      ],
+                      "label": "email",
+                      "key": "email"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "readOnly": true
+      },
+      "UnauthorizedError": {
+        "type": "object",
+        "title": "Auth Error | Unauthorized ",
+        "x-tags": [
+          "Auth"
+        ],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "UnauthorizedError"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Unauthorized access."
+              }
+            }
+          }
+        },
+        "readOnly": true
+      },
+      "registerUser": {
+        "type": "object",
+        "title": "Auth | Register User",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Full name of the user.",
+            "example": "John Doe",
+            "minLength": 2,
+            "maxLength": 100
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email Address of the user.",
+            "example": "test@example.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "description": "Password for the user account.",
+            "example": "********",
+            "minLength": 6
+          },
+          "confirmPassword": {
+            "type": "string",
+            "format": "password",
+            "description": "Confirmation of the password.",
+            "example": "********",
+            "minLength": 6
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password",
+          "confirmPassword"
+        ]
+      },
+      "refreshUser": {
+        "type": "object",
+        "title": "Auth | Refresh User Token",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Message indicating the token refresh status.",
+            "example": "Token refreshed successfully."
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "accessToken": {
+                "type": "string",
+                "description": "New access token for the user.",
+                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+              }
+            }
+          }
+        },
+        "readOnly": true
+      },
+      "logoutOthers": {
+        "type": "object",
+        "title": "Auth | Logout Others",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Message indicating the logout status."
+          }
+        },
+        "readOnly": true
       }
     },
     "responses": {
@@ -125,6 +403,30 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/loggedInUser"
+            }
+          }
+        }
+      },
+      "204": {
+        "description": "No Content - Successful logout",
+        "content": {}
+      },
+      "400": {
+        "description": "When the user makes an incorrect request, it returns",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BadRequestError"
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthorised access error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UnauthorizedError"
             }
           }
         }
