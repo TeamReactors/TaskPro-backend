@@ -1,0 +1,19 @@
+tags:
+  - Auth
+summary: User Login
+operationId: loginUser
+description: "Endpoint for user login"
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        $ref: ../../components/schemas/auth/loginUser.yaml
+responses:
+  200:
+    $ref: ../../components/responses/auth/200.yaml
+  # 400:
+    # $ref: ../../components/responses/auth/400.yaml
+  # 401:
+    # $ref: ../../components/responses/auth/401.yaml
