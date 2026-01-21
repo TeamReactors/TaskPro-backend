@@ -4,7 +4,7 @@ summary: User Login
 operationId: loginUser
 description: "Endpoint for user login"
 security:
-  - bearerAuth: []
+  - {}
 requestBody:
   content:
     application/json:
@@ -13,7 +13,7 @@ requestBody:
 responses:
   200:
     $ref: ../../components/responses/auth/200.yaml
-  # 400:
-    # $ref: ../../components/responses/auth/400.yaml
-  # 401:
-    # $ref: ../../components/responses/auth/401.yaml
+  400:
+    $ref: ../../components/responses/auth/400.yaml
+  401:
+    $ref: ../../components/responses/auth/401.yaml
