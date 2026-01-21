@@ -1,0 +1,5 @@
+description: When the user makes an incorrect request, it returns
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/auth/BadRequestError.yaml
