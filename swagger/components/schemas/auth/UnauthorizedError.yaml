@@ -1,0 +1,15 @@
+type: object
+title: "Auth Error | Unauthorized "
+x-tags:
+  - Auth
+properties:
+  message:
+    type: string
+    example: "UnauthorizedError"
+  data:
+    type: object
+    properties:
+      message:
+        type: string
+        example: "Unauthorized access."
+readOnly: true
