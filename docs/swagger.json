@@ -1,1 +1,134 @@
-{}
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Task Pro",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "description": "This is a documentation of Task Pro"
+  },
+  "servers": [
+    {
+      "url": "https://taskpro-backend-yofv.onrender.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Auth operations."
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "security": [
+          {}
+        ],
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User Login",
+        "operationId": "loginUser",
+        "description": "Endpoint for user login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/loginUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "loginUser": {
+        "type": "object",
+        "title": "Login User",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Please provide a valid email address.",
+            "example": "test@example.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "description": "Password is a required field.",
+            "example": "********"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "loggedInUser": {
+        "type": "object",
+        "title": "Logged-in User",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "User logged in successfully."
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "user": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "John Doe"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "test@example.com"
+                  }
+                }
+              },
+              "accessToken": {
+                "type": "string",
+                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "The user successfully logged in.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/loggedInUser"
+            }
+          }
+        }
+      }
+    }
+  }
+}
