@@ -1,0 +1,15 @@
+type: object
+title: "Auth | Refresh User Token"
+properties:
+  message:
+    type: string
+    description: Message indicating the token refresh status.
+    example: "Token refreshed successfully."
+  data:
+    type: object
+    properties:
+      accessToken:
+        type: string
+        description: New access token for the user.
+        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+readOnly: true

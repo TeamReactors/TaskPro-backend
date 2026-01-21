@@ -1,0 +1,39 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Task Pro
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: This is a documentation of Task Pro
+tags:
+  - name: Auth
+    description: Auth operations.
+servers:
+  - url: http://localhost:3000
+    description: Local Server
+  - url: https://taskpro-backend-yofv.onrender.com
+    description: Production Server
+paths:
+  /auth/login:
+    post:
+      # - bearerAuth: []
+      $ref: ../swagger/paths/auth/login.yaml
+  /auth/register:
+    post:
+      $ref: ../swagger/paths/auth/register.yaml
+  /auth/logout:
+    post:
+      $ref: ../swagger/paths/auth/logout.yaml
+  /auth/refresh:
+    post: 
+      $ref : ../swagger/paths/auth/refresh.yaml
+  /auth/logout-others:
+    post:
+      $ref : ../swagger/paths/auth/logoutOthers.yaml
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

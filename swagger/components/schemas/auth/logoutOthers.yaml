@@ -1,0 +1,8 @@
+type: object
+title: "Auth | Logout Others"
+properties:
+  message:
+    type: string
+    description: Message indicating the logout status.
+    # example: "Successfully logged out from other sessions."
+readOnly: true

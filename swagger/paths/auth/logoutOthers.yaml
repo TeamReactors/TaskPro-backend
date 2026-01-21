@@ -1,0 +1,26 @@
+tags:
+  - Auth
+summary: User Logout Others
+operationId: logoutOtherSessions
+description: "Endpoint for logging out from other sessions"
+security:
+  - bearerAuth: []
+responses:
+  200:
+    description: "The user has been successfully logged out from other sessions."
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/auth/logoutOthers.yaml
+  400:
+    description: "An error occurred while the user was logging out of other sessions."
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/auth/logoutOthers.yaml
+  401:
+    description: "An error occurred while the user was logging out of other sessions."
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/auth/logoutOthers.yaml

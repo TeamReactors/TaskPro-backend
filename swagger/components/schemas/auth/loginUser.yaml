@@ -1,0 +1,16 @@
+type: object
+title: "Auth | Login User"
+properties:
+  email:
+    type: string
+    format: email
+    description: Please provide a valid email address.
+    example: "test@example.com"
+  password:
+    type: string
+    format: password
+    description: Password is a required field.
+    example: "********"
+required:
+  - email
+  - password

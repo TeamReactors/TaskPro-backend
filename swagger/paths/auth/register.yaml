@@ -1,0 +1,19 @@
+tags:
+  - Auth
+summary: User Registration
+operationId: registerUser
+description: Endpoint for user registration
+security:
+  - {}
+requestBody:
+  content:
+    application/json:
+      schema:
+        $ref: ../../components/schemas/auth/registerUser.yaml
+responses:
+  200:
+    $ref: ../../components/responses/auth/200.yaml
+  400:
+    $ref: ../../components/responses/auth/400.yaml
+  401:
+    $ref: ../../components/responses/auth/401.yaml
