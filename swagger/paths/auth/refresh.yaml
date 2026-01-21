@@ -1,0 +1,16 @@
+tags:
+  - Auth
+summary: User Refresh Token
+operationId: refreshUserToken
+description: Endpoint for refreshing user token
+security:
+  - {}
+responses:
+  200:
+    description: The user's token has been successfully renewed.
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/auth/refreshUser.yaml
+  401:
+    $ref: ../../components/responses/auth/401.yaml
