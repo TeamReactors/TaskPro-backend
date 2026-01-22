@@ -1,7 +1,7 @@
 import { Router } from "express";
 import boardRoute from "./board.js";
 import authRoute from "./auth.js";
-
+import taskRoute from "./task.js";
 const router = Router();
 
 router.get("/", (req, res) => {
@@ -14,5 +14,6 @@ router.get("/", (req, res) => {
 
 router.use("/auth", authRoute);
 router.use("/board", boardRoute);
+router.use("/task", taskRoute); // Assuming taskRoute is similar to boardRoute
 
 export default router;
