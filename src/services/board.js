@@ -26,3 +26,4 @@ export const deleteBoardService = async (boardId, userId) => {
     throw createHttpError(404, "Board not found");
   }
 };
+
