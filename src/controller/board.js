@@ -27,7 +27,7 @@ export const fetchBoardController = async (req, res) => {
 
 export const deleteBoardController = async (req, res) => {
   const { boardId } = req.params;
-  const { id: userId } = req.user; 
+  const { id: userId } = req.user;
 
   await deleteBoardService(boardId, userId);
 
