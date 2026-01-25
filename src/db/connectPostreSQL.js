@@ -36,6 +36,18 @@ export const connectPostreSQL = async () => {
       );
     `;
 
+    await sql`
+      CREATE TABLE IF NOT EXISTS task(
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(100) NOT NULL,
+        description TEXT,
+        priority VARCHAR(10),
+        column_id INTEGER,
+        board_id INTEGER REFERENCES board(id) ON DELETE CASCADE,
+        deadline TIMESTAMP WITH TIME ZONE,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+      )`;
+
     console.log("Bağlantı başarılı");
   } catch (error) {
     console.log("Başarısız");
