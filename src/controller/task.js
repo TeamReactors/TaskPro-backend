@@ -1,6 +1,8 @@
 import {
   fetchTasksByBoardIdService,
   createTaskByBoardIdService,
+  deleteTaskByIdService,
+  moveTaskByIdService,
 } from "../services/task.js";
 
 export const fetchTasksByBoardIdController = async (req, res) => {
@@ -23,5 +25,24 @@ export const addTaskByBoardIdController = async (req, res) => {
   res.status(201).json({
     message: "Successfully created task",
     data: newTask,
+  });
+};
+
+export const deleteTaskByIdController = async (req, res) => {
+  const { taskId, boardId } = req.params;
+  await deleteTaskByIdService(taskId, boardId);
+
+  res.status(204).send();
+};
+
+
+export const moveTaskByIdController = async (req, res) => {
+  const { taskId, boardId } = req.params;
+  const { column_id: columnId } = req.body;
+  const updatedTask = await moveTaskByIdService(taskId, boardId, columnId);
+
+  res.status(200).json({
+    message: "Successfully moved task",
+    data: updatedTask,
   });
 };
