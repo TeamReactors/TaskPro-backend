@@ -14,6 +14,6 @@ router.get("/", (req, res) => {
 
 router.use("/auth", authRoute);
 router.use("/board", boardRoute);
-router.use("/task", taskRoute); // Assuming taskRoute is similar to boardRoute
+router.use("/tasks", taskRoute); // Assuming taskRoute is similar to boardRoute
 
 export default router;
