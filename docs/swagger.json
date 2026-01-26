@@ -23,6 +23,14 @@
     {
       "name": "Auth",
       "description": "Auth operations."
+    },
+    {
+      "name": "Board",
+      "description": "Board operations."
+    },
+    {
+      "name": "Task",
+      "description": "Task operations."
     }
   ],
   "paths": {
@@ -184,6 +192,329 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/board": {
+      "get": {
+        "tags": [
+          "Board"
+        ],
+        "summary": "Get Boards",
+        "operationId": "getBoards",
+        "description": "Retrieve all boards.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of boards.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getBoards"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Board"
+        ],
+        "summary": "Add Board",
+        "operationId": "addBoard",
+        "description": "Create a new board.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addBoard"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Board created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Success message.",
+                      "example": "Board created successfully."
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/boardItem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Board error responses",
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/board/{board_id}": {
+      "delete": {
+        "tags": [
+          "Board"
+        ],
+        "summary": "Delete Board By ID",
+        "operationId": "deleteBoard",
+        "description": "Delete a board by its ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "board_id",
+            "in": "path",
+            "description": "ID of the board to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Board deleted successfully."
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/tasks/{board_id}": {
+      "post": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Add Task by Board ID",
+        "operationId": "addTaskByBoardId",
+        "description": "Add a new task to a specific board by its ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "board_id",
+            "in": "path",
+            "description": "ID of the board to add the task to",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addTask"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Task added successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Success message.",
+                      "example": "Task added successfully."
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/taskItem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Get Tasks by Board ID",
+        "operationId": "getTasksByBoardId",
+        "description": "Retrieve all tasks associated with a specific board by its ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "board_id",
+            "in": "path",
+            "description": "ID of the board to retrieve tasks for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of tasks associated with the specified board ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getTasksByBoardId"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/tasks/{board_id}/{task_id}": {
+      "delete": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Delete Task by Board ID and Task ID",
+        "operationId": "deleteTaskByBoardIdAndTaskId",
+        "description": "Delete a specific task associated with a specific board by their IDs.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "board_id",
+            "in": "path",
+            "description": "ID of the board to delete the task from",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of the task to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Task deleted successfully."
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/tasks/{board_id}/{task_id}/move": {
+      "patch": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Move Task by Board ID and Task ID",
+        "operationId": "moveTaskByBoardIdAndTaskId",
+        "description": "Move a specific task associated with a specific board by their IDs.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "board_id",
+            "in": "path",
+            "description": "ID of the board to delete the task from",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of the task to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/moveTask"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task moved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Success message.",
+                      "example": "Task moved successfully."
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/taskItem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           }
         }
       }
@@ -394,6 +725,180 @@
           }
         },
         "readOnly": true
+      },
+      "boardItem": {
+        "type": "object",
+        "title": "Board | Item",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "Project Alpha"
+          },
+          "user_id": {
+            "type": "number",
+            "example": 42
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-01-01T12:00:00Z"
+          }
+        },
+        "readOnly": true
+      },
+      "getBoards": {
+        "type": "object",
+        "title": "Board | Get Boards",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Boards retrieved successfully."
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/boardItem"
+            }
+          }
+        }
+      },
+      "addBoard": {
+        "type": "object",
+        "title": "Board | Add Board",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the board.",
+            "example": "Project Alpha"
+          }
+        },
+        "required": [
+          "title"
+        ]
+      },
+      "taskItem": {
+        "type": "object",
+        "title": "Task | Item",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "Design Homepage"
+          },
+          "description": {
+            "type": "string",
+            "example": "Create the initial design for the homepage."
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "example": "high"
+          },
+          "column_id": {
+            "type": "number",
+            "example": 3
+          },
+          "board_id": {
+            "type": "number",
+            "example": 5
+          },
+          "deadline": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-02-15T09:00:00Z"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-01-10T14:30:00Z"
+          }
+        },
+        "readOnly": true
+      },
+      "getTasksByBoardId": {
+        "type": "object",
+        "title": "Task | Get Tasks By Board ID",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Tasks retrieved successfully."
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/taskItem"
+            }
+          }
+        }
+      },
+      "addTask": {
+        "type": "object",
+        "title": "Task | Add Task By Board ID",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Design Homepage"
+          },
+          "description": {
+            "type": "string",
+            "example": "Create the initial design for the homepage."
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "example": "high"
+          },
+          "column_id": {
+            "type": "number",
+            "example": 3
+          },
+          "board_id": {
+            "type": "number",
+            "example": 5
+          },
+          "deadline": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-02-15T09:00:00Z"
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "priority",
+          "column_id",
+          "board_id",
+          "deadline"
+        ]
+      },
+      "moveTask": {
+        "type": "object",
+        "title": "Task | Move Task",
+        "properties": {
+          "column_id": {
+            "type": "number",
+            "description": "ID of the column to move the task to.",
+            "example": 3
+          }
+        },
+        "required": [
+          "column_id"
+        ]
       }
     },
     "responses": {
