@@ -1,0 +1,10 @@
+type: object
+title: "Task | Get Tasks By Board ID"
+properties:
+  message:
+    type: string
+    example: "Tasks retrieved successfully."
+  data:
+    type: array
+    items:
+      $ref: ./taskItem.yaml
