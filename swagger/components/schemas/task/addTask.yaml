@@ -1,0 +1,33 @@
+type: object
+title: "Task | Add Task By Board ID"
+properties:
+  title:
+    type: string
+    example: "Design Homepage"
+  description:
+    type: string
+    example: "Create the initial design for the homepage."
+  priority:
+    type: string
+    enum:
+      - low
+      - medium
+      - high
+    example: "high"
+  column_id:
+    type: number
+    example: 3
+  board_id:
+    type: number
+    example: 5
+  deadline:
+    type: string
+    format: date-time
+    example: "2024-02-15T09:00:00Z"
+required:
+  - title
+  - description
+  - priority
+  - column_id
+  - board_id
+  - deadline
