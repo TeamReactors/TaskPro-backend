@@ -1,0 +1,29 @@
+tags:
+  - Board
+summary: Add Board
+operationId: addBoard
+description: Create a new board.
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        $ref: ../../components/schemas/board/addBoard.yaml
+responses:
+  201:
+    description: Board created successfully.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Success message.
+              example: "Board created successfully."
+            data:
+              $ref: ../../components/schemas/board/boardItem.yaml
+  401:
+    description: "Board error responses"
+    $ref: ../../components/responses/auth/401.yaml
