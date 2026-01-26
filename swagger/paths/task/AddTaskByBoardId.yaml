@@ -1,0 +1,35 @@
+tags:
+  - Task
+summary: Add Task by Board ID
+operationId: addTaskByBoardId
+description: Add a new task to a specific board by its ID.
+security:
+  - bearerAuth: []
+parameters:
+  - name: board_id
+    in: path
+    description: ID of the board to add the task to
+    required: true
+    schema:
+      type: string
+requestBody:
+  content: 
+    application/json:
+      schema:
+        $ref: ../../components/schemas/task/addTask.yaml
+responses: 
+  201:
+    description: Task added successfully.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Success message.
+              example: "Task added successfully."
+            data:
+              $ref: ../../components/schemas/task/taskItem.yaml
+  401:
+    $ref: ../../components/responses/auth/401.yaml
