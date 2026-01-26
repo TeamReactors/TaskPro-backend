@@ -1,0 +1,10 @@
+type: object
+title: "Board | Get Boards"
+properties:
+  message:
+    type: string
+    example: "Boards retrieved successfully."
+  data:
+    type: array
+    items:
+      $ref: ./boardItem.yaml

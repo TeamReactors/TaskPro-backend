@@ -1,0 +1,9 @@
+type: object
+title: "Task | Move Task"
+properties:
+  column_id:
+    type: number
+    description: ID of the column to move the task to.
+    example: 3
+required:
+  - column_id

@@ -9,6 +9,10 @@ info:
 tags:
   - name: Auth
     description: Auth operations.
+  - name: Board
+    description: Board operations.
+  - name: Task
+    description: Task operations.
 servers:
   - url: http://localhost:3000
     description: Local Server
@@ -26,11 +30,33 @@ paths:
     post:
       $ref: ../swagger/paths/auth/logout.yaml
   /auth/refresh:
-    post: 
-      $ref : ../swagger/paths/auth/refresh.yaml
+    post:
+      $ref: ../swagger/paths/auth/refresh.yaml
   /auth/logout-others:
     post:
-      $ref : ../swagger/paths/auth/logoutOthers.yaml
+      $ref: ../swagger/paths/auth/logoutOthers.yaml
+  # Board Paths
+  /board:
+    get:
+      $ref: ../swagger/paths/board/getBoards.yaml
+    post:
+      $ref: ../swagger/paths/board/addBoard.yaml
+  /board/{board_id}:
+    delete:
+      $ref: ../swagger/paths/board/deleteBoard.yaml
+  # Tasks Paths
+  /tasks/{board_id}:
+    post: 
+      $ref: ../swagger/paths/task/addTaskByBoardId.yaml
+    get:
+      $ref: ../swagger/paths/task/GetTasksByBoardId.yaml
+  /tasks/{board_id}/{task_id}:
+    delete:
+      $ref: ../swagger/paths/task/DeleteTaskByBoardIdAndTaskId.yaml
+  /tasks/{board_id}/{task_id}/move:
+    patch: 
+      $ref: ../swagger/paths/task/MoveTaskByBoardIdAndTaskId.yaml
+    
 components:
   securitySchemes:
     bearerAuth:

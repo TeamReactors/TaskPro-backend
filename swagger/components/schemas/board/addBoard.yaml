@@ -1,0 +1,9 @@
+type: object
+title: "Board | Add Board"
+properties:
+  title:
+    type: string
+    description: Title of the board.
+    example: "Project Alpha"
+required:
+  - title

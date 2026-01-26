@@ -1,0 +1,17 @@
+type: object
+title: "Board | Item"
+properties:
+  id:
+    type: number
+    example: 1
+  title:
+    type: string
+    example: "Project Alpha"
+  user_id:
+    type: number
+    example: 42
+  created_at:
+    type: string
+    format: date-time
+    example: "2024-01-01T12:00:00Z"
+readOnly: true
