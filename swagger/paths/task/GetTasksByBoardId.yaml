@@ -1,0 +1,23 @@
+tags:
+  - Task
+summary: Get Tasks by Board ID
+operationId: getTasksByBoardId
+description: Retrieve all tasks associated with a specific board by its ID.
+security:
+  - bearerAuth: []
+parameters:
+  - name: board_id
+    in: path
+    description: ID of the board to retrieve tasks for
+    required: true
+    schema:
+      type: string
+responses:
+  200:
+    description: A list of tasks associated with the specified board ID.
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/task/getTasksByBoardId.yaml
+  401:
+    $ref: ../../components/responses/auth/401.yaml
