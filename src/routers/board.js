@@ -13,8 +13,12 @@ const router = Router();
 
 router.use(authenticate);
 
-router.post("/", validateBody(addBoardSchema), ctrlWrapper(addBoardController));
-router.get("/", ctrlWrapper(fetchBoardController));
-router.delete("/:boardId", ctrlWrapper(deleteBoardController));
+router.post("/",
+  validateBody(addBoardSchema),
+  ctrlWrapper(addBoardController));
+router.get("/",
+  ctrlWrapper(fetchBoardController));
+router.delete("/:boardId",
+  ctrlWrapper(deleteBoardController));
 
 export default router;
