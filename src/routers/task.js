@@ -8,11 +8,14 @@ import {
   fetchTasksByBoardIdController,
   addTaskByBoardIdController,
   deleteTaskByIdController,
-  moveTaskByIdController,
+  // moveTaskByIdController,
 } from "../controller/task.js";
 
 // Validation
-import { addTaskSchema, moveTaskColumnSchema } from "../validation/task.js";
+import {
+  addTaskSchema,
+  // moveTaskColumnSchema
+} from "../validation/task.js";
 
 const router = Router();
 
@@ -20,18 +23,20 @@ router.use(authenticate);
 
 // Get all tasks for a specific board
 router.get("/:boardId", ctrlWrapper(fetchTasksByBoardIdController));
+// Add a Task By Board ID
 router.post(
   "/:boardId",
   validateBody(addTaskSchema),
   ctrlWrapper(addTaskByBoardIdController),
 );
+
 // Delete a Task By Board ID
-router.delete("/:boardId/:taskId", ctrlWrapper(deleteTaskByIdController));
+router.delete("/:taskId", ctrlWrapper(deleteTaskByIdController));
 
 // Move Task to another new column
-router.patch(
-  "/:boardId/:taskId/move",
-  validateBody(moveTaskColumnSchema),
-  ctrlWrapper(moveTaskByIdController),
-);
+// router.patch(
+//   "/:boardId/:taskId/move",
+//   validateBody(moveTaskColumnSchema),
+//   ctrlWrapper(moveTaskByIdController),
+// );
 export default router;
