@@ -32,7 +32,6 @@ export const fetchTasksByBoardIdService = async (boardId) => {
  * @param {string} payload.title - The title of the task
  * @param {string} payload.description - The description of the task
  * @param {string} payload.priority - The priority level of the task
- * @param {string|number} payload.column_id - The ID of the column where the task will be placed
  * @param {string|Date} payload.deadline - The deadline for the task
  * @returns {Promise<Object>} The created task object
  * @throws {Error} If the database operation fails
@@ -42,9 +41,9 @@ export const createTaskByBoardIdService = async (boardId, payload) => {
   const result = await sql`
     INSERT INTO 
         task 
-        (title,description,priority,column_id,board_id,deadline) 
+        (title,description,priority,board_id,deadline) 
     VALUES
-        (${payload.title}, ${payload.description}, ${payload.priority}, ${payload.column_id}, ${boardId}, ${payload.deadline})
+        (${payload.title}, ${payload.description}, ${payload.priority},  ${boardId}, ${payload.deadline})
     RETURNING *
     `;
 
