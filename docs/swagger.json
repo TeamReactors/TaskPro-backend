@@ -440,6 +440,66 @@
           }
         }
       }
+    },
+    "/tasks/{task_id}/move": {
+      "patch": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Move Task by Task ID",
+        "operationId": "moveTaskByTaskId",
+        "description": "Move a specific task by its ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "ID of the task to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/moveTask"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task moved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Success message.",
+                      "example": "Task moved successfully."
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/taskItem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -727,6 +787,10 @@
             ],
             "example": "high"
           },
+          "column_id": {
+            "type": "number",
+            "example": 3
+          },
           "board_id": {
             "type": "number",
             "example": 5
@@ -781,6 +845,10 @@
             ],
             "example": "high"
           },
+          "column_id": {
+            "type": "number",
+            "example": 3
+          },
           "board_id": {
             "type": "number",
             "example": 5
@@ -798,6 +866,20 @@
           "column_id",
           "board_id",
           "deadline"
+        ]
+      },
+      "moveTask": {
+        "type": "object",
+        "title": "Task | Move Task",
+        "properties": {
+          "column_id": {
+            "type": "number",
+            "description": "ID of the column to move the task to.",
+            "example": 3
+          }
+        },
+        "required": [
+          "column_id"
         ]
       }
     },

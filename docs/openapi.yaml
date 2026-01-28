@@ -46,17 +46,17 @@ paths:
       $ref: ../swagger/paths/board/deleteBoard.yaml
   # Tasks Paths
   /tasks/{board_id}:
-    post: 
+    post:
       $ref: ../swagger/paths/task/addTaskByBoardId.yaml
     get:
       $ref: ../swagger/paths/task/GetTasksByBoardId.yaml
   /tasks/{task_id}:
     delete:
       $ref: ../swagger/paths/task/DeleteTaskByBoardIdAndTaskId.yaml
-  # /tasks/{task_id}/move:
-  #   patch: 
-  #     $ref: ../swagger/paths/task/MoveTaskByBoardIdAndTaskId.yaml
-    
+  /tasks/{task_id}/move:
+    patch:
+      $ref: ../swagger/paths/task/MoveTaskByBoardIdAndTaskId.yaml
+
 components:
   securitySchemes:
     bearerAuth:
