@@ -32,6 +32,7 @@ export const fetchTasksByBoardIdService = async (boardId) => {
  * @param {string} payload.title - The title of the task
  * @param {string} payload.description - The description of the task
  * @param {string} payload.priority - The priority level of the task
+ * @param {string|number} payload.column_id - The ID of the column where the task will be placed
  * @param {string|Date} payload.deadline - The deadline for the task
  * @returns {Promise<Object>} The created task object
  * @throws {Error} If the database operation fails
@@ -41,9 +42,9 @@ export const createTaskByBoardIdService = async (boardId, payload) => {
   const result = await sql`
     INSERT INTO 
         task 
-        (title,description,priority,board_id,deadline) 
+        (title,description,priority,column_id,board_id,deadline) 
     VALUES
-        (${payload.title}, ${payload.description}, ${payload.priority},  ${boardId}, ${payload.deadline})
+        (${payload.title}, ${payload.description}, ${payload.priority}, ${payload.column_id}, ${boardId}, ${payload.deadline})
     RETURNING *
     `;
 
@@ -61,10 +62,10 @@ export const createTaskByBoardIdService = async (boardId, payload) => {
  * @example
  * const deletedTask = await deleteTaskByIdService(123);
  */
-export const deleteTaskByIdService = async (taskId, boardId) => {
+export const deleteTaskByIdService = async (taskId) => {
   const result = await sql`
     DELETE FROM task 
-    WHERE id = ${taskId} AND board_id = ${boardId}
+    WHERE id = ${taskId}
     RETURNING *
     `;
 
@@ -78,15 +79,14 @@ export const deleteTaskByIdService = async (taskId, boardId) => {
  * Moves a task to a different column within a board
  * @async
  * @param {string|number} taskId - The ID of the task to move
- * @param {string|number} boardId - The ID of the board containing the task
  * @param {string|number} newColumnId - The ID of the destination column
  * @returns {Promise<Object>} The updated task object
  * @throws {Error} 404 error if task not found or doesn't belong to the specified board
  */
-export const moveTaskByIdService = async (taskId, boardId, newColumnId) => {
+export const moveTaskByIdService = async (taskId, newColumnId) => {
   const result = await sql`
     UPDATE task SET column_id = ${newColumnId}
-    WHERE id = ${taskId} and board_id = ${boardId}
+    WHERE id = ${taskId} 
     RETURNING *
       `;
   if (result.length === 0) {

@@ -8,14 +8,11 @@ import {
   fetchTasksByBoardIdController,
   addTaskByBoardIdController,
   deleteTaskByIdController,
-  // moveTaskByIdController,
+  moveTaskByIdController,
 } from "../controller/task.js";
 
 // Validation
-import {
-  addTaskSchema,
-  // moveTaskColumnSchema
-} from "../validation/task.js";
+import { addTaskSchema, moveTaskColumnSchema } from "../validation/task.js";
 
 const router = Router();
 
@@ -34,9 +31,9 @@ router.post(
 router.delete("/:taskId", ctrlWrapper(deleteTaskByIdController));
 
 // Move Task to another new column
-// router.patch(
-//   "/:boardId/:taskId/move",
-//   validateBody(moveTaskColumnSchema),
-//   ctrlWrapper(moveTaskByIdController),
-// );
+router.patch(
+  "/:taskId/move",
+  validateBody(moveTaskColumnSchema),
+  ctrlWrapper(moveTaskByIdController),
+);
 export default router;
