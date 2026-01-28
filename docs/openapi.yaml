@@ -50,12 +50,12 @@ paths:
       $ref: ../swagger/paths/task/addTaskByBoardId.yaml
     get:
       $ref: ../swagger/paths/task/GetTasksByBoardId.yaml
-  /tasks/{board_id}/{task_id}:
+  /tasks/{task_id}:
     delete:
       $ref: ../swagger/paths/task/DeleteTaskByBoardIdAndTaskId.yaml
-  /tasks/{board_id}/{task_id}/move:
-    patch: 
-      $ref: ../swagger/paths/task/MoveTaskByBoardIdAndTaskId.yaml
+  # /tasks/{task_id}/move:
+  #   patch: 
+  #     $ref: ../swagger/paths/task/MoveTaskByBoardIdAndTaskId.yaml
     
 components:
   securitySchemes:
