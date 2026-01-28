@@ -42,7 +42,7 @@ export const connectPostreSQL = async () => {
         title VARCHAR(100) NOT NULL,
         description TEXT,
         priority VARCHAR(10),
-        column_id INTEGER REFERENCES columns(id) ON DELETE CASCADE
+        column_id INTEGER REFERENCES columns(id) ON DELETE CASCADE,
         board_id INTEGER REFERENCES board(id) ON DELETE CASCADE,
         deadline TIMESTAMP WITH TIME ZONE,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
