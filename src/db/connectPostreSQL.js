@@ -10,7 +10,6 @@ export const sql = neon(`postgresql://${user}:${password}@${host}/${database}`);
 
 export const connectPostreSQL = async () => {
   try {
-    // email unique keyword 
     await sql`
             CREATE TABLE IF NOT EXISTS users(
                 id SERIAL PRIMARY KEY,
@@ -36,7 +35,6 @@ export const connectPostreSQL = async () => {
         created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
       );
     `;
-    // columns one cekildi position eklendi
     await sql`
       CREATE TABLE IF NOT EXISTS columns(
         id SERIAL PRIMARY KEY,
@@ -45,7 +43,6 @@ export const connectPostreSQL = async () => {
         position INTEGER DEFAULT 0, 
         created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
       );`;
-    // position eklendi
     await sql`
       CREATE TABLE IF NOT EXISTS task(
         id SERIAL PRIMARY KEY,

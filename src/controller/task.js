@@ -38,8 +38,7 @@ export const deleteTaskByIdController = async (req, res) => {
 
 export const moveTaskByIdController = async (req, res) => {
   const { taskId, boardId } = req.params;
-  const { column_id: columnId } = req.body;
-  const updatedTask = await moveTaskByIdService(taskId, boardId, columnId);
+  const updatedTask = await moveTaskByIdService(taskId, boardId, req.body);
 
   res.status(200).json({
     message: "Successfully moved task",
