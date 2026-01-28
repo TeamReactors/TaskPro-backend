@@ -1,17 +1,17 @@
 tags:
   - Task
-summary: Delete Task by Board ID and Task ID
-operationId: deleteTaskByBoardIdAndTaskId
-description: Delete a specific task associated with a specific board by their IDs.
+summary: Delete Task by Task ID
+operationId: deleteTaskByTaskId
+description: Delete a specific task by its ID.
 security:
   - bearerAuth: []
 parameters:
-  - name: board_id
-    in: path
-    description: ID of the board to delete the task from
-    required: true
-    schema:
-      type: string
+  # - name: board_id
+  #   in: path
+  #   description: ID of the board to delete the task from
+  #   required: true
+  #   schema:
+  #     type: string
   - name: task_id
     in: path
     description: ID of the task to delete
