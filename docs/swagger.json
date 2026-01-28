@@ -407,29 +407,20 @@
         }
       }
     },
-    "/tasks/{board_id}/{task_id}": {
+    "/tasks/{task_id}": {
       "delete": {
         "tags": [
           "Task"
         ],
-        "summary": "Delete Task by Board ID and Task ID",
-        "operationId": "deleteTaskByBoardIdAndTaskId",
-        "description": "Delete a specific task associated with a specific board by their IDs.",
+        "summary": "Delete Task by Task ID",
+        "operationId": "deleteTaskByTaskId",
+        "description": "Delete a specific task by its ID.",
         "security": [
           {
             "bearerAuth": []
           }
         ],
         "parameters": [
-          {
-            "name": "board_id",
-            "in": "path",
-            "description": "ID of the board to delete the task from",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "task_id",
             "in": "path",
@@ -443,75 +434,6 @@
         "responses": {
           "204": {
             "description": "Task deleted successfully."
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/tasks/{board_id}/{task_id}/move": {
-      "patch": {
-        "tags": [
-          "Task"
-        ],
-        "summary": "Move Task by Board ID and Task ID",
-        "operationId": "moveTaskByBoardIdAndTaskId",
-        "description": "Move a specific task associated with a specific board by their IDs.",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "board_id",
-            "in": "path",
-            "description": "ID of the board to delete the task from",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "task_id",
-            "in": "path",
-            "description": "ID of the task to delete",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/moveTask"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Task moved successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Success message.",
-                      "example": "Task moved successfully."
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/taskItem"
-                    }
-                  }
-                }
-              }
-            }
           },
           "401": {
             "$ref": "#/components/responses/401"
@@ -805,10 +727,6 @@
             ],
             "example": "high"
           },
-          "column_id": {
-            "type": "number",
-            "example": 3
-          },
           "board_id": {
             "type": "number",
             "example": 5
@@ -863,10 +781,6 @@
             ],
             "example": "high"
           },
-          "column_id": {
-            "type": "number",
-            "example": 3
-          },
           "board_id": {
             "type": "number",
             "example": 5
@@ -884,20 +798,6 @@
           "column_id",
           "board_id",
           "deadline"
-        ]
-      },
-      "moveTask": {
-        "type": "object",
-        "title": "Task | Move Task",
-        "properties": {
-          "column_id": {
-            "type": "number",
-            "description": "ID of the column to move the task to.",
-            "example": 3
-          }
-        },
-        "required": [
-          "column_id"
         ]
       }
     },
