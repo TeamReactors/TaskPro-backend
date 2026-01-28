@@ -48,7 +48,7 @@ export const connectPostreSQL = async () => {
       );`;
 
     await sql`
-      CREATE TABLE IF NOT EXISTS column(
+      CREATE TABLE IF NOT EXISTS columns(
         id SERIAL PRIMARY KEY,
         title VARCHAR(100) NOT NULL,
         board_id INTEGER REFERENCES board(id) ON DELETE CASCADE
