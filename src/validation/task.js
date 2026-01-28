@@ -28,4 +28,5 @@ export const addTaskSchema = Joi.object({
  */
 export const moveTaskColumnSchema = Joi.object({
   column_id: Joi.number().required("New Column ID is required"),
+  position: Joi.number().optional()
 });
