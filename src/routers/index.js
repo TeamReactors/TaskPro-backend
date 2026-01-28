@@ -2,6 +2,8 @@ import { Router } from "express";
 import boardRoute from "./board.js";
 import authRoute from "./auth.js";
 import taskRoute from "./task.js";
+import columnRoute from "./column.js";
+
 const router = Router();
 
 router.get("/", (req, res) => {
@@ -15,5 +17,6 @@ router.get("/", (req, res) => {
 router.use("/auth", authRoute);
 router.use("/board", boardRoute);
 router.use("/tasks", taskRoute); // Assuming taskRoute is similar to boardRoute
+router.use("/column", columnRoute);
 
 export default router;
