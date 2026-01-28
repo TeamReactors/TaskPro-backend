@@ -16,29 +16,21 @@ import { addTaskSchema, moveTaskColumnSchema } from "../validation/task.js";
 
 const router = Router();
 
+router.use(authenticate);
+
 // Get all tasks for a specific board
-router.get(
-  "/:boardId",
-  authenticate,
-  ctrlWrapper(fetchTasksByBoardIdController),
-);
+router.get("/:boardId", ctrlWrapper(fetchTasksByBoardIdController));
 router.post(
   "/:boardId",
-  authenticate,
   validateBody(addTaskSchema),
   ctrlWrapper(addTaskByBoardIdController),
 );
 // Delete a Task By Board ID
-router.delete(
-  "/:boardId/:taskId",
-  authenticate,
-  ctrlWrapper(deleteTaskByIdController),
-);
+router.delete("/:boardId/:taskId", ctrlWrapper(deleteTaskByIdController));
 
 // Move Task to another new column
 router.patch(
   "/:boardId/:taskId/move",
-  authenticate,
   validateBody(moveTaskColumnSchema),
   ctrlWrapper(moveTaskByIdController),
 );
