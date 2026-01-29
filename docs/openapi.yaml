@@ -8,11 +8,13 @@ info:
   description: This is a documentation of Task Pro
 tags:
   - name: Auth
-    description: Auth operations.
+    description: Auth Endpoint.
   - name: Board
-    description: Board operations.
+    description: Board Endpoint.
   - name: Task
-    description: Task operations.
+    description: Task Endpoint.
+  - name: Column
+    description: Column Endpoint.
 servers:
   - url: http://localhost:3000
     description: Local Server
@@ -49,14 +51,25 @@ paths:
     post:
       $ref: ../swagger/paths/task/addTaskByBoardId.yaml
     get:
-      $ref: ../swagger/paths/task/GetTasksByBoardId.yaml
+      $ref: ../swagger/paths/task/getTasksByBoardId.yaml
   /tasks/{task_id}:
     delete:
-      $ref: ../swagger/paths/task/DeleteTaskByBoardIdAndTaskId.yaml
+      $ref: ../swagger/paths/task/deleteTaskByBoardIdAndTaskId.yaml
   /tasks/{task_id}/move:
     patch:
-      $ref: ../swagger/paths/task/MoveTaskByBoardIdAndTaskId.yaml
-
+      $ref: ../swagger/paths/task/moveTaskByBoardIdAndTaskId.yaml
+  # Columns Paths
+  /column:
+    post:
+      $ref: ../swagger/paths/column/addColumn.yaml
+  /column/{board_id}:
+    get:
+      $ref: ../swagger/paths/column/getColumnsByBoardId.yaml
+  /column/{column_id}:
+    delete:
+      $ref: ../swagger/paths/column/deleteColumnById.yaml
+    patch:
+      $ref: ../swagger/paths/column/updateColumnById.yaml
 components:
   securitySchemes:
     bearerAuth:
