@@ -1,0 +1,12 @@
+type: object
+title: "Columns | Add Column "
+properties:
+  title:
+    type: string
+    example: "Design Homepage"
+  board_id:
+    type: number
+    example: 5
+required:
+  - title
+  - board_id
