@@ -1,0 +1,28 @@
+tags:
+  - Column
+summary: Add Column
+operationId: addColumn
+description: Add a new column to a specific board.
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        $ref: ../../components/schemas/column/addColumn.yaml
+responses:
+  201:
+    description: Column added successfully.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Success message.
+              example: "Column added successfully."
+            data:
+              $ref: ../../components/schemas/column/columnItem.yaml
+  401:
+    $ref: ../../components/responses/auth/401.yaml
