@@ -1,7 +1,5 @@
 type: object
-title: "Auth Error | Unauthorized "
-x-tags:
-  - Auth
+title: "Error | Unauthorized "
 properties:
   message:
     type: string
