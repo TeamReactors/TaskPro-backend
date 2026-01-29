@@ -1,0 +1,35 @@
+tags:
+  - Column
+summary: Update Column by ID
+operationId: updateColumnById
+description: Update the details of a specific column by its ID.
+parameters:
+  - name: column_id
+    in: path
+    description: column by id
+    required: true
+    schema:
+      type: string
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        $ref: ../../components/schemas/column/updateColumn.yaml
+responses:
+  200:
+    description: Column updated successfully.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Success message.
+              example: "Column updated successfully."
+            data:
+              $ref: ../../components/schemas/column/columnItem.yaml
+  401:
+    $ref: ../../components/responses/auth/401.yaml
