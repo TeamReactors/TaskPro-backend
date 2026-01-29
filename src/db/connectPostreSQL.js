@@ -14,7 +14,7 @@ export const connectPostreSQL = async () => {
             CREATE TABLE IF NOT EXISTS users(
                 id SERIAL PRIMARY KEY,
                 name VARCHAR(100) NOT NULL,
-                email VARCHAR(100) NOT NULL,
+                email VARCHAR(100) NOT NULL UNIQUE, 
                 password VARCHAR(255) NOT NULL
             );
         `;
@@ -35,24 +35,25 @@ export const connectPostreSQL = async () => {
         created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
       );
     `;
-
+    await sql`
+      CREATE TABLE IF NOT EXISTS columns(
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(100) NOT NULL,
+        board_id INTEGER REFERENCES board(id) ON DELETE CASCADE,
+        position INTEGER DEFAULT 0, 
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+      );`;
     await sql`
       CREATE TABLE IF NOT EXISTS task(
         id SERIAL PRIMARY KEY,
         title VARCHAR(100) NOT NULL,
         description TEXT,
-        priority VARCHAR(10),
-        column_id INTEGER,
+        priority VARCHAR(20) DEFAULT 'Low', 
+        column_id INTEGER REFERENCES columns(id) ON DELETE CASCADE,
         board_id INTEGER REFERENCES board(id) ON DELETE CASCADE,
         deadline TIMESTAMP WITH TIME ZONE,
+        position INTEGER DEFAULT 0,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
-      );`;
-
-    await sql`
-      CREATE TABLE IF NOT EXISTS columns(
-        id SERIAL PRIMARY KEY,
-        title VARCHAR(100) NOT NULL,
-        board_id INTEGER REFERENCES board(id) ON DELETE CASCADE
       );`;
 
     console.log("Bağlantı başarılı");
