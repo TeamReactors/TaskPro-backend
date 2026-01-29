@@ -22,15 +22,19 @@
   "tags": [
     {
       "name": "Auth",
-      "description": "Auth operations."
+      "description": "Auth Endpoint."
     },
     {
       "name": "Board",
-      "description": "Board operations."
+      "description": "Board Endpoint."
     },
     {
       "name": "Task",
-      "description": "Task operations."
+      "description": "Task Endpoint."
+    },
+    {
+      "name": "Column",
+      "description": "Column Endpoint."
     }
   ],
   "paths": {
@@ -500,6 +504,201 @@
           }
         }
       }
+    },
+    "/column": {
+      "post": {
+        "tags": [
+          "Column"
+        ],
+        "summary": "Add Column",
+        "operationId": "addColumn",
+        "description": "Add a new column to a specific board.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addColumn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Column added successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Success message.",
+                      "example": "Column added successfully."
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/columnItem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/column/{board_id}": {
+      "get": {
+        "tags": [
+          "Column"
+        ],
+        "summary": "Get Columns by Board ID",
+        "operationId": "getColumnsByBoardId",
+        "description": "Retrieve all columns associated with a specific board by its ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "board_id",
+            "in": "path",
+            "description": "ID of the board to retrieve columns for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of columns associated with the specified board ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Success message.",
+                      "example": "Columns retrieved successfully."
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/columnItem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/column/{column_id}": {
+      "delete": {
+        "tags": [
+          "Column"
+        ],
+        "summary": "Delete Column by ID",
+        "operationId": "deleteColumnById",
+        "description": "Delete a specific column by its ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "column_id",
+            "in": "path",
+            "description": "ID of the column to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Column deleted successfully."
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Column"
+        ],
+        "summary": "Update Column by ID",
+        "operationId": "updateColumnById",
+        "description": "Update the details of a specific column by its ID.",
+        "parameters": [
+          {
+            "name": "column_id",
+            "in": "path",
+            "description": "column by id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateColumn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Column updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Success message.",
+                      "example": "Column updated successfully."
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/columnItem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -572,10 +771,7 @@
       },
       "BadRequestError": {
         "type": "object",
-        "title": "Auth Error | Bad Request ",
-        "x-tags": [
-          "Auth"
-        ],
+        "title": "Error | Bad Request ",
         "properties": {
           "message": {
             "type": "string",
@@ -615,10 +811,7 @@
       },
       "UnauthorizedError": {
         "type": "object",
-        "title": "Auth Error | Unauthorized ",
-        "x-tags": [
-          "Auth"
-        ],
+        "title": "Error | Unauthorized ",
         "properties": {
           "message": {
             "type": "string",
@@ -880,6 +1073,65 @@
         },
         "required": [
           "column_id"
+        ]
+      },
+      "addColumn": {
+        "type": "object",
+        "title": "Columns | Add Column ",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Design Homepage"
+          },
+          "board_id": {
+            "type": "number",
+            "example": 5
+          }
+        },
+        "required": [
+          "title",
+          "board_id"
+        ]
+      },
+      "columnItem": {
+        "type": "object",
+        "title": "Columns | Item",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "To Do"
+          },
+          "board_id": {
+            "type": "number",
+            "example": 5
+          },
+          "position": {
+            "type": "number",
+            "example": 1
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-01-10T14:30:00Z"
+          }
+        },
+        "readOnly": true
+      },
+      "updateColumn": {
+        "type": "object",
+        "title": "Columns | Update Column",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Updated Column Title"
+          }
+        },
+        "required": [
+          "title"
         ]
       }
     },
