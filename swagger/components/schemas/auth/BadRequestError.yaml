@@ -1,7 +1,5 @@
 type: object
-title: "Auth Error | Bad Request "
-x-tags:
-  - Auth
+title: "Error | Bad Request "
 properties:
   message:
     type: string
