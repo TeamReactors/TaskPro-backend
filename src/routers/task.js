@@ -20,17 +20,19 @@ router.use(authenticate);
 
 // Get all tasks for a specific board
 router.get("/:boardId", ctrlWrapper(fetchTasksByBoardIdController));
+// Add a Task By Board ID
 router.post(
   "/:boardId",
   validateBody(addTaskSchema),
   ctrlWrapper(addTaskByBoardIdController),
 );
+
 // Delete a Task By Board ID
-router.delete("/:boardId/:taskId", ctrlWrapper(deleteTaskByIdController));
+router.delete("/:taskId", ctrlWrapper(deleteTaskByIdController));
 
 // Move Task to another new column
 router.patch(
-  "/:boardId/:taskId/move",
+  "/:taskId/move",
   validateBody(moveTaskColumnSchema),
   ctrlWrapper(moveTaskByIdController),
 );

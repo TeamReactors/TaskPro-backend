@@ -1,0 +1,32 @@
+tags:
+  - Column
+summary: Get Columns by Board ID
+operationId: getColumnsByBoardId
+description: Retrieve all columns associated with a specific board by its ID.
+security:
+  - bearerAuth: []
+parameters:
+  - name: board_id
+    in: path
+    description: ID of the board to retrieve columns for
+    required: true
+    schema:
+      type: string
+responses:
+  200:
+    description: A list of columns associated with the specified board ID.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Success message.
+              example: "Columns retrieved successfully."
+            data:
+              type: array
+              items:
+                $ref: ../../components/schemas/column/columnItem.yaml
+  401:
+    $ref: ../../components/responses/auth/401.yaml

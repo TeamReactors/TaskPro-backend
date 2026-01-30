@@ -70,10 +70,10 @@ export const createTaskByBoardIdService = async (boardId, payload) => {
  * @example
  * const deletedTask = await deleteTaskByIdService(123);
  */
-export const deleteTaskByIdService = async (taskId, boardId) => {
+export const deleteTaskByIdService = async (taskId) => {
   const result = await sql`
     DELETE FROM task 
-    WHERE id = ${taskId} AND board_id = ${boardId}
+    WHERE id = ${taskId}
     RETURNING *
     `;
 

@@ -35,7 +35,6 @@ export const deleteTaskByIdController = async (req, res) => {
   res.status(204).send();
 };
 
-
 export const moveTaskByIdController = async (req, res) => {
   const { taskId, boardId } = req.params;
   const updatedTask = await moveTaskByIdService(taskId, boardId, req.body);

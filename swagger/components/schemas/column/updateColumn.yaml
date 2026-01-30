@@ -1,0 +1,8 @@
+type: object
+title: "Columns | Update Column"
+properties:
+  title:
+    type: string
+    example: "Updated Column Title"
+required:
+  - title

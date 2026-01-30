@@ -1,0 +1,20 @@
+type: object
+title: "Columns | Item"
+properties:
+  id:
+    type: number
+    example: 1
+  title:
+    type: string
+    example: "To Do"
+  board_id:
+    type: number
+    example: 5
+  position:
+    type: number
+    example: 1
+  created_at:
+    type: string
+    format: date-time
+    example: "2024-01-10T14:30:00Z"
+readOnly: true
