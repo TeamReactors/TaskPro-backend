@@ -1,8 +1,8 @@
 tags:
   - Task
-summary: Add Task by Board ID
-operationId: addTaskByBoardId
-description: Add a new task to a specific board by its ID.
+summary: Add Task 
+operationId: addTask
+description: Add a new task.
 security:
   - bearerAuth: []
 requestBody:

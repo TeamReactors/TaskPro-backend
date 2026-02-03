@@ -49,7 +49,7 @@ paths:
   # Tasks Paths
   /tasks:
     post:
-      $ref: ../swagger/paths/task/addTaskByBoardId.yaml
+      $ref: ../swagger/paths/task/addTask.yaml
   /tasks/{board_id}:
     get:
       $ref: ../swagger/paths/task/getTasksByBoardId.yaml
