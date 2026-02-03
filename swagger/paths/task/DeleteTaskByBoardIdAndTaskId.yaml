@@ -6,12 +6,6 @@ description: Delete a specific task by its ID.
 security:
   - bearerAuth: []
 parameters:
-  # - name: board_id
-  #   in: path
-  #   description: ID of the board to delete the task from
-  #   required: true
-  #   schema:
-  #     type: string
   - name: task_id
     in: path
     description: ID of the task to delete

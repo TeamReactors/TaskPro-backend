@@ -17,10 +17,10 @@ export const fetchTasksByBoardIdController = async (req, res) => {
 };
 
 export const addTaskByBoardIdController = async (req, res) => {
-  const { boardId } = req.params;
+
   const payload = req.body;
 
-  const newTask = await createTaskByBoardIdService(boardId, payload);
+  const newTask = await createTaskByBoardIdService(payload.board_id, payload);
 
   res.status(201).json({
     message: "Successfully created task",

@@ -22,7 +22,7 @@ router.use(authenticate);
 router.get("/:boardId", ctrlWrapper(fetchTasksByBoardIdController));
 // Add a Task By Board ID
 router.post(
-  "/:boardId",
+  "/",
   validateBody(addTaskSchema),
   ctrlWrapper(addTaskByBoardIdController),
 );

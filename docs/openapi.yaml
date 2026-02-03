@@ -47,9 +47,10 @@ paths:
     delete:
       $ref: ../swagger/paths/board/deleteBoard.yaml
   # Tasks Paths
-  /tasks/{board_id}:
+  /tasks:
     post:
       $ref: ../swagger/paths/task/addTaskByBoardId.yaml
+  /tasks/{board_id}:
     get:
       $ref: ../swagger/paths/task/getTasksByBoardId.yaml
   /tasks/{task_id}:
